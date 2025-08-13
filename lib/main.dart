@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:project/pages/home_page.dart';
-import 'package:project/pages/loginpage.dart';
+
+import 'package:project/routes/route.dart';
+import 'package:project/screens/login.dart';
+import 'package:project/screens/splashscreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,14 +15,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      
-      initialRoute: "/home",
+      debugShowCheckedModeBanner: false,
+      initialRoute: MyRoutes.splascScreenRoute,
       routes: {
-        "/":(context)=>Loginpage(),
-        "/login":(context)=>Loginpage(),
-        "/home":(context)=>HomePage()
+        MyRoutes.splascScreenRoute:(context)=>Splashscreen(),
+        MyRoutes.loginScreenRoute:(contect)=>Login(),
       },
-     
+   
 
     );
   }
