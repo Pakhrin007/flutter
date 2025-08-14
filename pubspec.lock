@@ -222,7 +222,7 @@ packages:
     source: hosted
     version: "2.1.4"
   velocity_x:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: velocity_x
       sha256: "45c1584d00c625d15132d1ec88b71427b907980f8ba7445a8d9052931d573c15"

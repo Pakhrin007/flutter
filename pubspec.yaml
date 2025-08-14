@@ -28,6 +28,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  velocity_x: ^4.3.1
   flutter:
     sdk: flutter
 
@@ -38,7 +39,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  velocity_x: ^4.3.1
+ 
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -59,8 +60,10 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - assets/images/download.png
+    - assets/fonts/libe.ttf
+    - assets/fonts/poppins.ttf
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -74,10 +77,13 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+    - family: libe
+      fonts:
+        - asset: assets/fonts/libe.ttf
+    - family: poppins
+      fonts:
+        - asset: assets/fonts/poppins.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

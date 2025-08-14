@@ -28,12 +28,14 @@ class _SplashscreenState extends State<Splashscreen> {
   Widget build(BuildContext context) {
     
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(child: 
       Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            "MY NOTES".text.xl2.bold.make(),
+            "MY NOTES".text.xl2.bold.textStyle(TextStyle(fontFamily: 'poppins')).make(),
+            10.heightBox,
             CircularProgressIndicator()
           ],
         ),
