@@ -97,6 +97,19 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                   ),
+                ),
+                20.heightBox,
+
+                Row(
+                  children: [
+                    "If Account not created".text.uppercase.xl.textStyle(TextStyle(color: Colors.black87,fontFamily: 'poppins')).make().pOnly(right: 10,left: 40),
+                    
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushReplacementNamed(context, MyRoutes.registerScreenRoute);
+                      },
+                      child: "SIgnup".text.uppercase.xl2.semiBold.textStyle(TextStyle(color: Colors.deepOrangeAccent,fontFamily: 'libe',decoration: TextDecoration.underline,)).make()),
+                  ],
                 )
 
               ],
