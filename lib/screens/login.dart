@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/auth_services/auth_services.dart';
 import 'package:project/routes/route.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -22,7 +23,25 @@ class _LoginState extends State<Login> {
     })  ;
   }
 
+  final authservice=AuthServices();
 
+  final _emailController=TextEditingController();
+  final _passwordController=TextEditingController();
+
+
+  void login() async{
+    final email=_emailController.text;
+    final password=_passwordController.text;
+
+    try {
+      await authservice.signinWithEmailPassword(email, password);
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("error")));
+      }
+      
+    }
+  }
   bool onChange=false;
   @override
   Widget build(BuildContext context) {
@@ -42,6 +61,7 @@ class _LoginState extends State<Login> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
+                    controller: _emailController,
                     
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.email),
@@ -63,6 +83,7 @@ class _LoginState extends State<Login> {
                 10.heightBox,
                 Padding(padding: const EdgeInsets.all(8),
                 child: TextFormField(
+                  controller: _passwordController,
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.password),
                     prefixIconColor: Colors.deepOrangeAccent,

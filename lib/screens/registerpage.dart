@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:project/auth_services/auth_services.dart';
 import 'package:project/routes/route.dart';
-import 'package:project/screens/login.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+
 import 'package:velocity_x/velocity_x.dart';
 
 class Registerpage extends StatefulWidget {
@@ -11,17 +13,71 @@ class Registerpage extends StatefulWidget {
 }
 
 class _RegisterpageState extends State<Registerpage> {
-  bool onChange=false;
+  // bool onChange=false;
 
-  final _formKey=GlobalKey<FormState>();
-  void handleRegister(){
-    setState(() {
-      onChange=true;
-    });
-    Future.delayed(Duration(seconds: 3),() {
-      Navigator.pushReplacementNamed(context, MyRoutes.homeScreenRoute);
-    });
+  // final _formKey=GlobalKey<FormState>();
+  // void handleRegister(){
+  //   setState(() {
+  //     onChange=true;
+  //   });
+  //   Future.delayed(Duration(seconds: 3),() {
+  //     Navigator.pushReplacementNamed(context, MyRoutes.homeScreenRoute);
+  //   });
+  // }
+
+  // final authservice=AuthServices();
+  // final _emailController=TextEditingController();
+  // final _passwordController=TextEditingController();
+  // final _confirmPasswordController=TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+  bool _isLoading = false;
+
+
+    Future<void> signup() async {
+    if (!_formKey.currentState!.validate()) return;
+
+    final email = _emailController.text.trim();
+    final password = _passwordController.text.trim();
+    final confirmPassword = _confirmPasswordController.text.trim();
+
+    if (password != confirmPassword) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Passwords do not match")),
+      );
+      return;
+    }
+
+    setState(() => _isLoading = true);
+
+    try {
+      final response = await Supabase.instance.client.auth.signUp(
+        email: email,
+        password: password,
+      );
+
+      if (response.user != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Signup successful! Please check your email.")),
+        );
+        Navigator.pushReplacementNamed(context, MyRoutes.homeScreenRoute);
+      }
+    } on AuthException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.message)),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Something went wrong, try again.")),
+      );
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
   }
+ 
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -37,7 +93,7 @@ class _RegisterpageState extends State<Registerpage> {
                   Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
-                    
+                    controller: _emailController,
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.email),
                       prefixIconColor: Colors.deepOrangeAccent,
@@ -79,7 +135,7 @@ class _RegisterpageState extends State<Registerpage> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
-                    
+                    controller: _passwordController,
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.password),
                       prefixIconColor: Colors.deepOrangeAccent,
@@ -100,7 +156,7 @@ class _RegisterpageState extends State<Registerpage> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
-                    
+                    controller: _confirmPasswordController,
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.password),
                       prefixIconColor: Colors.deepOrangeAccent,
@@ -126,12 +182,12 @@ class _RegisterpageState extends State<Registerpage> {
                       borderRadius: BorderRadius.circular(12)
                     ),
                     child: InkWell(
-                      onTap:() => handleRegister(),
+                      onTap:_isLoading?null:signup ,
                       child: AnimatedContainer(duration: Duration(seconds: 2),
                       height: 50,
-                      width: onChange?70:100,
+                      width: _isLoading?70:100,
                       alignment: Alignment.center,
-                      child: onChange?Icon(Icons.done,color: Colors.black):"SignUp".text.xl2.bold.textStyle(TextStyle(fontFamily: 'libe',color: Colors.white)).make(),
+                      child: _isLoading?Icon(Icons.done,color: Colors.black):"SignUp".text.xl2.bold.textStyle(TextStyle(fontFamily: 'libe',color: Colors.white)).make(),
                       ),
                     ),
                   ),

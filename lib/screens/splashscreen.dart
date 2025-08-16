@@ -35,6 +35,7 @@ class _SplashscreenState extends State<Splashscreen> {
                   .text
                   .xl2
                   .bold
+                  .color(Colors.deepOrangeAccent)
                   .textStyle(const TextStyle(fontFamily: 'poppins'))
                   .make(),
               10.heightBox,
